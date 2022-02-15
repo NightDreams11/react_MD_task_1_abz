@@ -26,31 +26,28 @@ const style = {
 function Form() {
 
     const {register, handleSubmit, formState: {errors},} = useForm();
+
     const onSubmit = (data) => (console.log(data));
     console.log(errors);
 
-    const [values, setValues] = React.useState({
-        name: ""
-    });
-    const handleChange = (name, length) => event => {
-        setValues({...values, [name]: event.target.value});
-    };
+
+    // const [values, setValues] = React.useState({
+    //     name: ""
+    // });
+    // const handleChange = (name) => event => {
+    //     setValues({...values, [name]: event.target.value});
+    // };
+
+
+
 
     const [stringLength, setStringLength] = useState('');
-    console.log(stringLength)
-    let errorMessage = (stringLength) => {
-        if (stringLength < 2) {
-            return 'Your name needs to be between 2 and 128 characters long'
-        } else if (stringLength > 128) {
-            return 'Your name needs to be between 2 and 128 characters long'
-        } else {
-            return undefined
-        }
-    }
 
-    const isError = (errors, errorMessage) => {
-        if (errors && errorMessage === true){
-            return true;
+    let errorMessage = () => {
+        if (stringLength.length < 2) {
+            return 'Your name needs to be between 2 and 128 characters long'
+        } else if (stringLength.length > 128) {
+            return 'Your name needs to be between 2 and 128 characters long'
         } else {
             return false;
         }
@@ -68,11 +65,11 @@ function Form() {
                     sx={{...style}}
                     label="Name*"
                     {...register("name", {required: "Enter your name"})}
-                    error={errorMessage ? errorMessage() : false}
-                    helperText={<HelperText error={errors?.name ? errors.name.message : null}
-                                            counter={`${values.name.length}/${128}`}/>}
+                    error={(stringLength.length < 2) ? true : ((stringLength.length > 128) ? true : false)}
+                    helperText={<HelperText error={errorMessage()}
+                                            counter={`${stringLength.length}/${128}`}/>}
                     onChange={e => {
-                        handleChange("name");
+                        // handleChange("name");
                         setStringLength(e.target.value)
                     }}
                     // inputProps={{minLength: 2, maxLength: 128}}
