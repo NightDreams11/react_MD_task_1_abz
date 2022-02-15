@@ -1,0 +1,8 @@
+---
+- name: Create a challenge for test2022-frontend-rostyslav-m.abzdev2.com using a account key from a variable.
+  letsencrypt:
+    account_key_src: tasks/csr/rsa.txt
+    csr: tasks/csr/csr.txt
+    dest: /etc/httpd/ssl/test2022-frontend-rostyslav-m.abzdev2.com.crt
+    fullchain_dest: /etc/httpd/ssl/test2022-frontend-rostyslav-m.abzdev2.com.crt
+  register: test2022-frontend-rostyslav-m.abzdev2.com

@@ -1,0 +1,27 @@
+---
+
+- name: "supervisor: install"
+  apt: pkg=supervisor state=present
+
+- name: "supervisor: create dirs"
+  file: path='test2022-frontend-rostyslav-m.abzdev2.com' state=directory owner=www-data group=www-data
+  with_items:
+    - /var/log/supervisor
+
+- name: "supervisor: start service"
+  service: name=supervisor state=started
+
+- name: "supervisor: config"
+  template: src=supervisor/supervisor.j2 dest='/etc/supervisor/conf.d/supervisor.conf' owner=www-data group=www-data
+
+- name: "supervisor: restart service"
+  service: name=supervisor state=restarted
+
+#- name: "supervisor: reread"
+#  shell: supervisorctl reread
+
+#- name: "supervisor: update"
+#  shell: supervisorctl update
+
+#- name: "supervisor: start worker"
+#  shell: supervisorctl start all

@@ -1,0 +1,5 @@
+---
+- name: install nginx
+  apt: #Менеджер пакетов
+    name: nginx
+    state: latest

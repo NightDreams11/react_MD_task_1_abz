@@ -1,0 +1,6 @@
+---
+- name: install php
+  apt: #Менеджер пакетов
+    pkg:
+      - php7.4
+    state: latest

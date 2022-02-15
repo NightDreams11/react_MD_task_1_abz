@@ -1,0 +1,21 @@
+---
+- name: install ssl
+  vars:
+    certbot_admin_email: rostyslav.makhmutov@abz.agency
+    certbot_create_if_missing: true
+    certbot_create_standalone_stop_services: [ ]
+    certbot_certs:
+      - domains:
+          - test2022-frontend-rostyslav-m.abzdev2.com
+  pre_tasks:
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+      changed_when: false
+
+    - name: Install cron (Debian).
+      apt: name=cron state=present
+      when: ansible_os_family == 'Debian'
+
+  roles:
+    - geerlingguy.certbot
