@@ -1,4 +1,9 @@
-function HelperTexts({error, counter}) {
+function HelperTexts({error, counter, isDirty, isDiscription}) {
+    debugger
+    if (isDirty || isDiscription === false){
+        error = '';
+    }
+
     const helperTexts = [
         {
             id: 1,
