@@ -1,7 +1,11 @@
-function HelperTexts({error, counter, isDirty, isDiscription}) {
-    debugger
-    if (isDirty || isDiscription === false){
+function HelperTexts({ error, errorMessage, counter, isDirty, description}) {
+
+    if ((isDirty || description) === false) {
         error = '';
+    } else if ((isDirty === false)) {
+        error = description;
+    } else if ((isDirty === true) && (error === true)) {
+        error = errorMessage;
     }
 
     const helperTexts = [
