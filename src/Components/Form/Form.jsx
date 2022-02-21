@@ -277,7 +277,7 @@ function Form() {
                     maskChar="x"
                     onBlur={e => setIsDirtyPinCode1(true)}
                     onChange={(e) => {
-                        setPinCode1(e.target.value.replace(/[\s\-]/g, ''));
+                        setPinCode1(e.target.value.replace(/[\s-]/g, ''));
                         setPinCode1Counter(e.target.value.replace(/[\s\-x]/g, ''));
                     }}
                 >

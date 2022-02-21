@@ -35,8 +35,7 @@ task('build', function () { //В данном случае composer не нуж�
 
 task('permissions:fix', function () {
     run('sudo apt-get install acl');
-    run('sudo chown -R www-data.www-data {{deploy_path}}/current/');
-    run('sudo chown -R www-data.www-data {{deploy_path}}/shared/');
+    run('sudo chown -R www-data.www-data {{deploy_path}}/');
 })->desc('Fix permissions after deployment (set owner to www-data)');
 
 // StoryBook
@@ -66,8 +65,8 @@ task('deploy', [            //Можно выбирать между release и 
 //     'webpack_storybook',
     'build',
     'deploy:shared',
-//     'deploy:writable',
-//     'deploy:symlink',
+    'deploy:writable',
+    'deploy:symlink',
 //     'killall:node',
     'permissions:fix',
 ]);
@@ -77,6 +76,4 @@ after('deploy:failed', 'deploy:unlock');
 after('deploy', 'reload:nginx');
 
 // Migrate database before symlink new release.
-
-before('deploy:symlink', 'artisan:migrate');
 

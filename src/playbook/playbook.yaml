@@ -5,6 +5,6 @@
   tasks:                #Основной список задач для выполнения, они запускаются после roles и перед post_tasks
 #   - include: tasks/nginx.yaml
 #   - include: tasks/php.yaml
-#   - include: tasks/supervisor.yaml
+   - include: tasks/supervisor.yaml
 #   - include: tasks/node.yaml
-   - include: tasks/config.yaml
+#   - include: tasks/config.yaml
