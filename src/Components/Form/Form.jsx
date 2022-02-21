@@ -337,7 +337,7 @@ function Form() {
                     defaultValue={description}
                     rows={4}
                     rowsmax={2}
-                    multiline={true}
+                    multiline
                     inputProps={{maxLength: 500}} //style: {height: 108}
                     onChange={e => {
                         setDescription(e.target.value.replace(/\s{2,}/g, ' ').trim());

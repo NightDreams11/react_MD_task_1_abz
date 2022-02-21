@@ -4,10 +4,10 @@ namespace Deployer;
 require 'recipe/laravel.php'; //Все равно что import с командами, откуда частично будут использоваться команды в том числе и для проекта на NodeJS, изначально команды для php-проекта.
 
 // Project name
-set('application', 'task0.1'); //Внес изменение task0.1
+set('application', 'new_project'); //Внес изменение new_project
 
 // Project repository
-set('repository', 'git@bitbucket.org:frontend_rostyslav_m/task1.git');
+set('repository', 'git@bitbucket.org:Trainee_abz/task1.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true); 
@@ -22,9 +22,9 @@ set('allow_anonymous_stats', false);
 
 // Hosts
 
-host('142.93.96.234')
+host('164.92.198.5')
     ->user('root')
-    ->identityFile('./src/playbook/.ssh/id_rsa')
+    ->identityFile(__DIR__ . '/src/playbook/.ssh/id_rsa')
     ->set('deploy_path', '/var/www/test2022-frontend-rostyslav-m.abzdev2.com'); //var/www/папка обычно называющаяся именем домена
     
 // Tasks
@@ -63,7 +63,7 @@ task('deploy', [            //Можно выбирать между release и 
     'deploy:release',
     'deploy:update_code',
     'install_nodejs_dependencies',
-    'webpack_storybook',
+//     'webpack_storybook',
     'build',
     'deploy:shared',
 //     'deploy:writable',

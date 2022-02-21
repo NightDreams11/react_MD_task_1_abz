@@ -5,7 +5,7 @@ export const errorMessage = (stringLength) => {
     // console.log(regex)
     if (regex.test(stringLength)) {
         return false;
-    } else if (stringLength.search(/[!@#\$%\^&*\(\)_+\{\}\[\]\.,:\S]/)) {
+    } else if (stringLength.search(/[!@#$%^&*()_+{}[\].,:\S]/)) {
         return 'Your name needs to be between 2 and 128 characters long'
     } else {
         return 'Your name needs to be use only latin characters'
@@ -23,7 +23,7 @@ export const emailIsValid = (email) => {
 }
 
 export const emailIsValidRFC = (email) => {
-    const regex = /^([a-zA-Z0-9@!#$%^&*()_\-+={}~|\[\]\\'"\/\s])([a-zA-Z0-9@!#$%^&*()_\-+={}~|\[\]\\'"\s\/]+)@([a-z])+(\.)(([a-z]{1,6})([^\s]$)|([a-z]+)(\.)([a-z]{1,6})([^\s\.]$))/
+    const regex = /^([a-zA-Z0-9@!#$%^&*()_\-+={}~|[\]\\'"/\s])([a-zA-Z0-9@!#$%^&*()_\-+={}~|[\]\\'"\s/]+)@([a-z])+(\.)(([a-z]{1,6})([^\s]$)|([a-z]+)(\.)([a-z]{1,6})([^\s.]$))/
     if (regex.test(email)) {
         return false;
     } else {
@@ -42,8 +42,8 @@ export const IDIsValid = (ID) => {
 }
 
 export const PhoneIsValid = (phone) => {
-    const str = phone.replace(/[\(\)\s]/g, "");
-    const regex = /(^[\+]{0,1}380([0-9]{9})$)/
+    const str = phone.replace(/[()\s]/g, "");
+    const regex = /(^[+]{0,1}380([0-9]{9})$)/
     if (regex.test(str)) {
         return false;
     } else {
