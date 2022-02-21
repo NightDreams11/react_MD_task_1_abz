@@ -1,4 +1,13 @@
-function HelperTexts({error, counter}) {
+function HelperTexts({ error, errorMessage, counter, isDirty, description}) {
+
+    if ((isDirty || description) === false) {
+        error = '';
+    } else if ((isDirty === false)) {
+        error = description;
+    } else if ((isDirty === true) && (error === true)) {
+        error = errorMessage;
+    }
+
     const helperTexts = [
         {
             id: 1,

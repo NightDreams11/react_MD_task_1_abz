@@ -1,0 +1,5 @@
+---
+- name: install python3
+  apt: #Менеджер пакетов
+    name: python3.8
+    state: latest

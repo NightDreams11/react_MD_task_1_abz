@@ -1,50 +1,70 @@
-export const required = (value) => {
-  if (value) {
-    return undefined;
-  } else {
-    return <div>Filed is required</div>
-  }
-};
-
-export const maxLengthCreator = (maxLength) => (value) => {
-    if (value && value.length > maxLenght) {
-        return <div className={styles.text}>{`Max length is ${maxLenght} symbols`}</div>
+export const errorMessage = (stringLength) => {
+    // console.log(stringLength)
+    // const regex = /^[a-zA-Z\s]*/
+    const regex = /^[a-zA-Z\s]+[a-zA-Z\s]$/
+    // console.log(regex)
+    if (regex.test(stringLength)) {
+        return false;
+    } else if (stringLength.search(/[!@#\$%\^&*\(\)_+\{\}\[\]\.,:\S]/)) {
+        return 'Your name needs to be between 2 and 128 characters long'
     } else {
-        return undefined;
+        return 'Your name needs to be use only latin characters'
     }
 }
 
-export const minLengthCreator = (minLength) => (value) => {
-    if (value && value.length < minLenght) {
-        return <div className={styles.text}>{`Min length is ${minLenght} symbols`}</div>
+export const emailIsValid = (email) => {
+    const regex = /^([a-zA-Z0-9]+((\.[a-zA-Z0-9])|[a-zA-Z0-9])*)@[a-zA-Z]+\.[a-z]+((\.([a-z]+)$|([a-z])+$))/
+    // const regex = /^[a-zA-Z0-9]*@[a-zA-Z]+\.[a-z]+(?(?=\.)(\.([a-z]+)$)|([a-z]+)$)/
+    if (regex.test(email)) {
+        return false;
     } else {
-        return undefined;
+        return "Please insert a valid email address";
     }
 }
 
-export const emailValidationCreator = (email) => {
-    const RFC2822 = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
-
-    if (email) {
-        if (RFC2822.test(email)) {
-            return undefined;
-        } else {
-            return <div className={styles.text}>Enter valid email</div>
-        }
+export const emailIsValidRFC = (email) => {
+    const regex = /^([a-zA-Z0-9@!#$%^&*()_\-+={}~|\[\]\\'"\/\s])([a-zA-Z0-9@!#$%^&*()_\-+={}~|\[\]\\'"\s\/]+)@([a-z])+(\.)(([a-z]{1,6})([^\s]$)|([a-z]+)(\.)([a-z]{1,6})([^\s\.]$))/
+    if (regex.test(email)) {
+        return false;
     } else {
-        return undefined;
+        return "Please insert a valid email address";
     }
 }
 
-export const phoneValidationCreator = (phoneNumber) => {
-    const pattern = /(^[\+]{0,1}380([0-9]{9})$)/
-    if (phoneNumber) {
-        if (phoneNumber.match(pattern)) {
-            return undefined;
-        } else {
-            return <div className={styles.text}>+380</div>
-        }
+export const IDIsValid = (ID) => {
+    // const regex = /^[a-z0-9_]+[^@\s!#$%&'*+\/=?^`{|}~\-\.]/
+    const regex = /^[0-9a-z_]+([0-9a-z_]+)$/
+    if (regex.test(ID)) {
+        return false;
     } else {
-        return undefined;
+        return 'Use only latin lowercase letters, numbers and "_"';
+    }
+}
+
+export const PhoneIsValid = (phone) => {
+    const str = phone.replace(/[\(\)\s]/g, "");
+    const regex = /(^[\+]{0,1}380([0-9]{9})$)/
+    if (regex.test(str)) {
+        return false;
+    } else {
+        return 'Please enter your phone in the format +38 (xxx) xxx-xx-xx'
+    }
+}
+
+export const extraPhoneIsValid = (phone) => {
+    const regex = /^([+0-9,\s]+)([0-9]+)$/
+    if (regex.test(phone) && phone.length >= 7) {
+        return false;
+    } else {
+        return 'Your phone needs to be between 7 and 256 characters long'
+    }
+}
+
+export const PinIsValid = (pin) => {
+    const regex = /^(\d{8})/
+    if (regex.test(pin)) {
+        return false;
+    } else {
+        return 'Please enter your pin code in the format xxxx-xxxxx. Use only numbers'
     }
 }
