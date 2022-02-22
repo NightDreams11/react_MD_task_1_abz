@@ -17,11 +17,11 @@
 - name: "supervisor: restart service"
   service: name=supervisor state=restarted
 
-- name: "supervisor: reread"
-  shell: supervisorctl reread
+#- name: "supervisor: reread"
+#  shell: supervisorctl reread
 
-- name: "supervisor: update"
-  shell: supervisorctl update
+#- name: "supervisor: update"
+#  shell: supervisorctl update
 
 - name: "supervisor: start worker"
-  shell: supervisorctl start all
+  shell: supervisorctl restart all

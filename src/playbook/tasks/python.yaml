@@ -3,3 +3,13 @@
   apt: #Менеджер пакетов
     name: python3.8
     state: latest
+
+- name: Python-pip
+  apt:
+    name: python3-pip
+    state: latest
+
+- name: software-properties-commonso
+  apt:
+    name: software-properties-common
+    state: latest

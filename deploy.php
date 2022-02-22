@@ -67,7 +67,7 @@ task('deploy', [            //Можно выбирать между release и 
     'deploy:shared',
     'deploy:writable',
     'deploy:symlink',
-//     'killall:node',
+    'killall:node',
     'permissions:fix',
 ]);
 

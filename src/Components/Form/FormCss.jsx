@@ -1,4 +1,19 @@
 export const style = {
+    root: {
+        ':-webkit-autofill': {
+            WebkitBoxShadow: '0 0 0 1000px white inset',
+            backgroundColor: 'red !important'
+        }
+    },
+    input: {
+        ':-webkit-autofill': {
+            WebkitBoxShadow: '0 0 0 1000px white inset',
+            backgroundColor: 'red !important'
+        }
+    },
+    icon: {
+      ml: 1,
+    },
     mt: 7,
     maxWidth: 380,
     width: '100%',

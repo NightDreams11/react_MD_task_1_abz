@@ -1,8 +1,5 @@
 export const errorMessage = (stringLength) => {
-    // console.log(stringLength)
-    // const regex = /^[a-zA-Z\s]*/
     const regex = /^[a-zA-Z\s]+[a-zA-Z\s]$/
-    // console.log(regex)
     if (regex.test(stringLength)) {
         return false;
     } else if (stringLength.search(/[!@#$%^&*()_+{}[\].,:\S]/)) {
@@ -14,11 +11,10 @@ export const errorMessage = (stringLength) => {
 
 export const emailIsValid = (email) => {
     const regex = /^([a-zA-Z0-9]+((\.[a-zA-Z0-9])|[a-zA-Z0-9])*)@[a-zA-Z]+\.[a-z]+((\.([a-z]+)$|([a-z])+$))/
-    // const regex = /^[a-zA-Z0-9]*@[a-zA-Z]+\.[a-z]+(?(?=\.)(\.([a-z]+)$)|([a-z]+)$)/
     if (regex.test(email)) {
         return false;
     } else {
-        return "Please insert a valid email address";
+        return "Please use numbers and latin characters. Format х@х.хх";
     }
 }
 
@@ -27,7 +23,7 @@ export const emailIsValidRFC = (email) => {
     if (regex.test(email)) {
         return false;
     } else {
-        return "Please insert a valid email address";
+        return "Please insert email. Format х@х.хх";
     }
 }
 
@@ -37,7 +33,7 @@ export const IDIsValid = (ID) => {
     if (regex.test(ID)) {
         return false;
     } else {
-        return 'Use only latin lowercase letters, numbers and "_"';
+        return 'Use only latin lowercase letters, numbers and "_". Min length 2 characters';
     }
 }
 
