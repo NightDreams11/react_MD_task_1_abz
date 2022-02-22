@@ -3,3 +3,16 @@
   apt: #Менеджер пакетов
     name: nginx
     state: latest
+
+- name: "delete default nginx site"
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: copy nginx site.conf
+  template:
+    src: /Users/abz/WebstormProjects/new_project/src/templates/site.conf.j2
+    dest: /etc/nginx/sites-enabled/test2022-frontend-rostyslav-m.abzdev2.com
+    owner: root
+    group: root
+    mode: '0644'

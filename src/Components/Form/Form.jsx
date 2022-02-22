@@ -1,6 +1,9 @@
 import React from 'react';
 import {Button, Container} from '@mui/material';
 import TextField from '@mui/material/TextField';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import HelperText from "../HelperText/HelperText";
 import {useState} from "react";
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
@@ -15,29 +18,7 @@ import {
     PinIsValid
 } from "../../Validators/validators";
 import InputMask from "react-input-mask";
-
-
-const style = {
-    mt: 7,
-    maxWidth: 380,
-    width: '100%',
-    height: 54,
-    helperText: {
-        display: 'flex',
-        justifyContent: 'space-between',
-    },
-    form: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    button: {
-        mt: 17,
-        mb: 17,
-        width: 120,
-        height: 42
-    }
-};
+import {style} from './FormCss'
 
 
 function Form() {
@@ -73,9 +54,9 @@ function Form() {
     //Description
     const [description, setDescription] = useState('');
     const [lengthForCounter, setLengthForCounter] = useState('')
-    console.log(description)
 
 
+    // Выключаем кнопку, если не заполнены все обязательные поля
     const arr = {
         1: errorMessage(stringLength),
         2: emailIsValid(emailLength),
@@ -86,14 +67,72 @@ function Form() {
         isDisable = false
     }
 
-
+    // Собираем Data и выводим в консоль. preventDefault не дает обновиться странице после отправки Data.
+    // Object.fromEntries(formData.entries()) вытягивает данные из функции/
     const onSubmit = (data) => {
         data.preventDefault();
-        //Чтобы данные метод отработал, полям нужно указать параметр name
+        //Чтобы данный метод отработал, полям нужно указать параметр name
         const formData = new FormData(data.target);
         console.log(Object.fromEntries(formData.entries()))
+
+
+        setStringLength('');
+        setIsDirty(false);
+
+        setEmailLength('');
+        setIsDirtyEmail(false);
+
+        setEmailLengthRFC('');
+        setIsDirtyEmailRFC(false);
+
+        setID('');
+        setIsDirtyID(false);
+
+        setId_('');
+        setIsDirtyId_(false);
+
+        setPhoneMark('');
+        setIsDirtyPhoneMark(false);
+
+        setPhone('');
+        setIsDirtyPhone(false);
+
+        setPinCode1('');
+        setPinCode1Counter('');
+        setIsDirtyPinCode1(false);
+
+        setPinCode2('');
+        setIsDirtyPinCode2(false);
     }
 
+    // Start Snackbar
+    const [openSnack, setOpenSnack] = useState(false);
+
+    const handleClickSnackbar = () => {
+        setOpenSnack(true);
+    };
+
+    // Сюда приходят пропсы из Snackbar в зависимости был ли клик или истекло время. Срабатывает Callback в OnClose
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return false;
+        }
+        setOpenSnack(false);
+    };
+
+    const action = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+            >
+                <CloseIcon fontSize="small"/>
+            </IconButton>
+        </React.Fragment>
+    );
+    // End Snackbar
 
     return (
         <Container
@@ -105,12 +144,23 @@ function Form() {
                 minWidth: '320px',
             }}
         >
+
             <form onSubmit={onSubmit} style={{...style.form}} noValidate>
+                {/*Snackbar*/}
+                <Snackbar
+                    open={openSnack}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    action={action}
+                    anchorOrigin={{vertical: "top", horizontal: "right"}}
+                    message="Data sent successfully"
+                />
                 {/*Name field*/}
                 <TextField
                     sx={{...style}}
                     label="Name*"
                     name='name'
+                    value={stringLength}
                     inputProps={{maxLength: 128}}
                     InputProps={{
                         endAdornment: isDirty ? (errorMessage(stringLength) ? <ErrorOutlineIcon color={"error"}/> :
@@ -122,10 +172,10 @@ function Form() {
                                             counter={`${stringLength.length}/${128}`}
                                             isDirty={isDirty}/>}
                     onChange={e => {
-                        setStringLength(e.target.value.trim())
+                        setStringLength(e.target.value)
                     }}
                     onBlur={e => setIsDirty(true)}
-                    FormHelperTextProps={{style: style.helperText}} //Специальный props для стилизации helperText
+                    FormHelperTextProps={{style: style.helperText}} // Специальный props для стилизации helperText
                 />
                 {/*Email field*/}
                 <TextField
@@ -133,13 +183,14 @@ function Form() {
                     id="outlined-basic"
                     label="Email*"
                     name='email'
+                    value={emailLength}
                     inputProps={{maxLength: 254}}
                     InputProps={{
                         endAdornment: isDirtyEmail ? (emailIsValid(emailLength) ? <ErrorOutlineIcon color={"error"}/> :
                             <CheckCircleOutlineOutlinedIcon color={"success"}/>) : false
                     }}
                     onChange={e => {
-                        setEmailLength(e.target.value)
+                        setEmailLength(e.target.value.trim())
                     }}
                     error={isDirtyEmail ? (emailIsValid(emailLength) ? true : false) : false}
                     helperText={<HelperText error={emailIsValid(emailLength) ? true : false}
@@ -156,13 +207,15 @@ function Form() {
                     id="outlined-basic"
                     label="Email RFC"
                     name='emailRFC'
+                    value={emailLengthRFC}
                     inputProps={{maxLength: 254}}
                     InputProps={{
-                        endAdornment: isDirtyEmailRFC ? (emailIsValidRFC(emailLengthRFC) ? <ErrorOutlineIcon color={"error"}/> :
+                        endAdornment: isDirtyEmailRFC ? (emailIsValidRFC(emailLengthRFC) ?
+                            <ErrorOutlineIcon color={"error"}/> :
                             <CheckCircleOutlineOutlinedIcon color={"success"}/>) : false
                     }}
                     onChange={e => {
-                        setEmailLengthRFC(e.target.value)
+                        setEmailLengthRFC(e.target.value.trim())
                     }}
                     error={isDirtyEmailRFC ? (emailIsValidRFC(emailLengthRFC) ? true : false) : false}
                     helperText={<HelperText error={emailIsValidRFC(emailLengthRFC) ? true : false}
@@ -179,12 +232,13 @@ function Form() {
                     id="outlined-basic"
                     label="ID"
                     name='id'
+                    value={ID}
                     InputProps={{
                         endAdornment: isDirtyID ? (IDIsValid(ID) ? <ErrorOutlineIcon color={"error"}/> :
                             <CheckCircleOutlineOutlinedIcon color={"success"}/>) : false
                     }}
                     onChange={e => {
-                        setID(e.target.value)
+                        setID(e.target.value.trim())
                     }}
                     error={isDirtyID ? (IDIsValid(ID) ? true : false) : false}
                     helperText={<HelperText error={IDIsValid(ID) ? true : false}
@@ -199,13 +253,14 @@ function Form() {
                     id="outlined-basic"
                     label="id_"
                     name='id_'
+                    value={id_}
                     inputProps={{maxLength: 128}}
                     InputProps={{
                         endAdornment: isDirtyId_ ? (IDIsValid(id_) ? <ErrorOutlineIcon color={"error"}/> :
                             <CheckCircleOutlineOutlinedIcon color={"success"}/>) : false
                     }}
                     onChange={e => {
-                        setId_(e.target.value)
+                        setId_(e.target.value.trim())
                     }}
                     error={isDirtyId_ ? (IDIsValid(id_) ? true : false) : false}
                     helperText={<HelperText error={IDIsValid(id_) ? true : false}
@@ -231,8 +286,10 @@ function Form() {
                         id="outlined-basic"
                         label="Phone*"
                         name='phone'
+                        value={PhoneMark}
                         InputProps={{
-                            endAdornment: isDirtyPhoneMark ? (PhoneIsValid(PhoneMark) ? <ErrorOutlineIcon color={"error"}/> :
+                            endAdornment: isDirtyPhoneMark ? (PhoneIsValid(PhoneMark) ?
+                                <ErrorOutlineIcon color={"error"}/> :
                                 <CheckCircleOutlineOutlinedIcon color={"success"}/>) : false
                         }}
                         // onChange={e => {
@@ -252,6 +309,7 @@ function Form() {
                     id="outlined-basic"
                     label="Phone"
                     name='secondPhone'
+                    value={Phone}
                     inputProps={{maxLength: 256}}
                     InputProps={{
                         endAdornment: isDirtyPhone ? (extraPhoneIsValid(Phone) ? <ErrorOutlineIcon color={"error"}/> :
@@ -269,7 +327,7 @@ function Form() {
                     onBlur={e => setIsDirtyPhone(true)}
                     FormHelperTextProps={{style: style.helperText}}
                 />
-                {/*Pin*/}
+                {/*PinCode1*/}
                 <InputMask
                     mask="9999-9999"
                     value={PinCode1}
@@ -286,9 +344,11 @@ function Form() {
                             sx={{...style}}
                             id="outlined-basic"
                             label="Pin code"
+                            value={PinCode1}
                             // inputProps={{maxLength: 8}}
                             InputProps={{
-                                endAdornment: isDirtyPinCode1 ? (PinIsValid(PinCode1) ? <ErrorOutlineIcon color={"error"}/> :
+                                endAdornment: isDirtyPinCode1 ? (PinIsValid(PinCode1) ?
+                                    <ErrorOutlineIcon color={"error"}/> :
                                     <CheckCircleOutlineOutlinedIcon color={"success"}/>) : false
                             }}
                             // onChange={e => {
@@ -305,12 +365,13 @@ function Form() {
                         />
                     }
                 </InputMask>
-                {/*Pin code2*/}
+                {/*PinCode2*/}
                 <TextField
                     sx={{...style}}
                     id="outlined-basic"
                     label="Pin code"
                     name='secondPin'
+                    value={PinCode2}
                     inputProps={{maxLength: 8}}
                     InputProps={{
                         endAdornment: isDirtyPinCode2 ? (PinIsValid(PinCode2) ? <ErrorOutlineIcon color={"error"}/> :
@@ -350,7 +411,9 @@ function Form() {
                 >
                 </TextField>
                 <Button sx={{...style.button}} type="submit" variant="contained"
-                        disabled={isDisable ? true : false}>Send</Button>
+                        disabled={isDisable ? true : false}
+                        onClick={handleClickSnackbar}
+                >Send</Button>
             </form>
         </Container>
     );

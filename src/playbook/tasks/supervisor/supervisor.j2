@@ -1,16 +1,10 @@
 [program:site]
-#!/bin/sh
 file=/var/run/supervisor.sock
-chmod=0700
-chown=appuser:supervisor
 process_name=%(program_name)s%(process_num)02d
 directory=/var/www/test2022-frontend-rostyslav-m.abzdev2.com/current/
 command=npm run start
 autostart=true
 autorestart=true
-user=root
 numprocs=1
-stopasgroup=true
-stopsignal=QUIT
 redirect_stderr=true
 stdout_logfile=/var/log/supervisor/next.log

@@ -1,21 +1,21 @@
 ---
-- name: install ssl
-  vars:
-    certbot_admin_email: rostyslav.makhmutov@abz.agency
-    certbot_create_if_missing: true
-    certbot_create_standalone_stop_services: [ ]
-    certbot_certs:
-      - domains:
-          - test2022-frontend-rostyslav-m.abzdev2.com
-  pre_tasks:
-    - name: Update apt cache.
-      apt: update_cache=true cache_valid_time=600
-      when: ansible_os_family == 'Debian'
-      changed_when: false
+- name: create 'certs' folder
+  file:
+    path: /etc/nginx/certs
+    state: directory
 
-    - name: Install cron (Debian).
-      apt: name=cron state=present
-      when: ansible_os_family == 'Debian'
+- name: copy ssl certeficate
+  template:
+    src: certeficates/test2022-frontend-rostyslav-m.abzdev2.com.cer
+    dest: /etc/nginx/certs/test2022-frontend-rostyslav-m.abzdev2.com.cer
+    owner: root
+    group: root
+    mode: '0644'
 
-  roles:
-    - geerlingguy.certbot
+- name: copy ssl key
+  template:
+    src: certeficates/test2022-frontend-rostyslav-m.abzdev2.com.key
+    dest: /etc/nginx/certs/test2022-frontend-rostyslav-m.abzdev2.com.key
+    owner: root
+    group: root
+    mode: '0644'
