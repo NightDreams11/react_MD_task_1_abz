@@ -19,7 +19,7 @@ export const emailIsValid = (email) => {
 }
 
 export const emailIsValidRFC = (email) => {
-    const regex = /^([a-zA-Z0-9@!#$%^&*()_\-+={}~|[\]\\'"/\s])([a-zA-Z0-9@!#$%^&*()_\-+={}~|[\]\\'"\s/]+)@([a-z])+(\.)(([a-z]{1,6})([^\s]$)|([a-z]+)(\.)([a-z]{1,6})([^\s.]$))/
+    const regex = /^([a-zA-Z0-9@!#$%^&*()_\-+={}~|[\]\\'"\s])([a-zA-Z0-9@!#$%^&*()_\-+={}~|[\]\\'"\s]{0,63})@([a-z])+(\.)(([a-z]{1,6})([^\s]$)|([a-z]+)(\.)([a-z]{1,6})([^\s.]$))/
     if (regex.test(email)) {
         return false;
     } else {
@@ -49,11 +49,12 @@ export const PhoneIsValid = (phone) => {
 
 export const extraPhoneIsValid = (phone) => {
     const regex = /^([+0-9,\s]+)([0-9]+)$/
-    // const regex = /^(([+0-9]{7,13})(,\s|;\s|\s))+([0-9]{7,13})$/ //Второй вариант рабочий
+    // const regex = /^[+0-9]{7,13}(,\s|;\s|\s)*([+0-9]{7,13})*/ //Второй вариант рабочий
     if (regex.test(phone) && phone.length >= 7) {
+        console.log('valid')
         return false;
     } else {
-        return 'Your phone needs to be between 7 and 256 characters long'
+        return 'Your phone needs to be between 7 and 256 characters long. One number between 7-13 characters'
     }
 }
 

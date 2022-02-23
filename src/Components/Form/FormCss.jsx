@@ -28,6 +28,7 @@ export const style = {
         alignItems: 'center',
     },
     button: {
+        cursor: 'pointer',
         mt: 17,
         mb: 9,
         width: 120,

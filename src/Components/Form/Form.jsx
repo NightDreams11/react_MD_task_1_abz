@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {Button, Container} from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
@@ -62,7 +62,6 @@ function Form() {
     //Description
     const [description, setDescription] = useState('');
     const [lengthForCounter, setLengthForCounter] = useState('')
-    console.log(PhoneMark)
 
 
     // Выключаем кнопку, если не заполнены все обязательные поля
@@ -139,12 +138,12 @@ function Form() {
                 aria-label="close"
                 color="inherit"
                 onClick={handleClose}
+                sx={{cursor: 'pointer'}}
             >
                 <CloseIcon fontSize="small"/>
             </IconButton>
         </React.Fragment>
     );
-    // End Snackbar
 
 
     return (
@@ -156,8 +155,8 @@ function Form() {
                 sx={{
                     textAlign: 'center',
                     height: '100vh',
-                    paddingRight: '15px',
-                    paddingLeft: '15px !important',
+                    paddingRight: '16px !important',
+                    paddingLeft: '16px !important',
                     minWidth: '320px',
                 }}
             >
@@ -296,9 +295,11 @@ function Form() {
                         value={PhoneMark}
                         disable={false}
                         maskChar="x"
-                        onBlur={e => setIsDirtyPhoneMark(true)}
+                        onBlur={(e) => {
+                            setIsDirtyPhoneMark(true);
+                        }}
                         onChange={(e) => {
-                            setPhoneMark(e.target.value.replace(/x/g, ''))
+                            setPhoneMark(e.target.value.replace(/x/g, ''));
                         }}
                     >{() =>
                         <TextField
@@ -306,7 +307,7 @@ function Form() {
                             id="outlined-basic"
                             label="Phone*"
                             name='phone'
-                            value={PhoneMark}
+                            // value={PhoneMark}
                             InputProps={{
                                 endAdornment: isDirtyPhoneMark ? (PhoneIsValid(PhoneMark) ?
                                     <ErrorOutlineIcon color={"error"} sx={{...style.icon}}/> :
@@ -365,6 +366,7 @@ function Form() {
                                 sx={{...style}}
                                 id="outlined-basic"
                                 label="Pin code"
+                                name='pin'
                                 value={PinCode1}
                                 // inputProps={{maxLength: 8}}
                                 InputProps={{
@@ -424,7 +426,7 @@ function Form() {
                         multiline
                         inputProps={{maxLength: 500}} //style: {height: 108}
                         onChange={e => {
-                            setDescription(e.target.value.replace(/\s{2,}/g, ' ').trim());
+                            setDescription(e.target.value.replace(/\s{2,}/g, ''));
                             setLengthForCounter(e.target.value);
                         }}
                         helperText={<HelperText isDirty={false}

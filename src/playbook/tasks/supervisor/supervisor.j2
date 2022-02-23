@@ -1,13 +1,12 @@
 [program:site]
+process_name=%(program_name)s%(process_num)02d
 directory=/var/www/test2022-frontend-rostyslav-m.abzdev2.com/current/
+command=npm run start
 autostart=true
 autorestart=true
-startretries=1
-startsecs=1
-redirect_stderr=true
-stderr_logfile=/var/log/supervisor/next-err.log
-stdout_logfile=/var/log/supervisor/next-out.log
 user=root
-stopsignal=QUIT
-killasgroup=true
+numprocs=1
 stopasgroup=true
+stopsignal=QUIT
+redirect_stderr=true
+stdout_logfile=/var/log/supervisor/next.log
