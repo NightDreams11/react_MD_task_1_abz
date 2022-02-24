@@ -146,6 +146,7 @@ function Form() {
     );
 
 
+
     return (
         <div>
             <div className='header'>
@@ -294,12 +295,29 @@ function Form() {
                         mask="+38 (099) 999 99 99"
                         value={PhoneMark}
                         disable={false}
-                        maskChar="x"
+                        maskChar={'x'}
                         onBlur={(e) => {
                             setIsDirtyPhoneMark(true);
                         }}
                         onChange={(e) => {
-                            setPhoneMark(e.target.value.replace(/x/g, ''));
+                            setPhoneMark(e.target.value)
+                        }}
+                        // Срабатывает при вставке в поле. Отлавливаем значение до того
+                        // как оно попадет в state. Функцией обрезаем +380.
+                        onPaste={function handlePaste(e) {
+                            let clipboardData, pastedData;
+
+                            // Stop data actually being pasted into div
+                            e.stopPropagation();
+                            e.preventDefault();
+
+                            // Get pasted data via clipboard API
+                            clipboardData = e.clipboardData || window.clipboardData;
+                            pastedData = clipboardData.getData('Text');
+
+                            // Do whatever with pasteddata
+                            const replaced = pastedData.replace(/\+380/g, '')
+                            setPhoneMark(replaced)
                         }}
                     >{() =>
                         <TextField

@@ -38,6 +38,10 @@ export const IDIsValid = (ID) => {
 }
 
 export const PhoneIsValid = (phone) => {
+    if (phone.length <= 9){
+        phone = '380' + phone;
+        console.log(phone)
+    }
     const str = phone.replace(/[()\s]/g, "");
     const regex = /(^[+]{0,1}380([0-9]{9})$)/
     if (regex.test(str)) {
@@ -63,6 +67,6 @@ export const PinIsValid = (pin) => {
     if (regex.test(pin)) {
         return false;
     } else {
-        return 'Please enter your pin code in the format xxxx-xxxxx. Use only numbers'
+        return 'Please enter your pin code in the format xxxx-xxxx. Use only numbers'
     }
 }
