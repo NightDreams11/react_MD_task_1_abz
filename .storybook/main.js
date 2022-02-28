@@ -1,12 +1,25 @@
+const webpack = require('webpack');
+const merge = require('webpack-merge');
 module.exports = {
+
   webpackFinal: async (config, { configType }) => {
+
       config.optimization = {
-          minimize: false,
-          minimizer: [],
+          // minimize: false,
+          // minimizer: [],
+          splitChunks: {
+              minSize: 10000,
+              maxSize: 250000,
+          },
       };
 
       return config;
   },
+    // Немного уменьшил бандлы
+    features: {
+        storyStoreV7: true,
+    },
+
   "stories": [
     "../src/**/*.stories.mdx",
     "../src/**/*.stories.@(js|jsx|ts|tsx)"
