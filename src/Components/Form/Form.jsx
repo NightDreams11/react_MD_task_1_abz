@@ -16,7 +16,7 @@ import {
     IDIsValid,
     PhoneIsValid,
     extraPhoneIsValid,
-    PinIsValid
+    PinIsValid, secondPinIsValid
 } from "../../Validators/validators";
 import InputMask from "react-input-mask";
 import {style} from './FormCss'
@@ -62,7 +62,7 @@ function Form() {
     //Description
     const [description, setDescription] = useState('');
     const [lengthForCounter, setLengthForCounter] = useState('')
-
+    console.log(stringLength)
 
     // Выключаем кнопку, если не заполнены все обязательные поля
     const arr = {
@@ -145,8 +145,7 @@ function Form() {
         </React.Fragment>
     );
 
-
-
+    console.log(PinCode1)
     return (
         <div>
             <div className='header'>
@@ -189,9 +188,14 @@ function Form() {
                                                 counter={`${stringLength.length}/${128}`}
                                                 isDirty={isDirty}/>}
                         onChange={e => {
-                            setStringLength(e.target.value)
+                            setStringLength(e.target.value
+                                .replace(/\s+/g, ' '))
                         }}
-                        onBlur={e => setIsDirty(true)}
+                        onBlur={e => {
+                            setIsDirty(true);
+                            setStringLength(e.target.value
+                                .trim())
+                        }}
                         FormHelperTextProps={{style: style.helperText}} // Специальный props для стилизации helperText
                     />
                     {/*Email field*/}
@@ -208,7 +212,7 @@ function Form() {
                                 <CheckCircleOutlineOutlinedIcon color={"success"} sx={{...style.icon}}/>) : false
                         }}
                         onChange={e => {
-                            setEmailLength(e.target.value.trim())
+                            setEmailLength(e.target.value.replace(/\s+/g, ' '))
                         }}
                         error={isDirtyEmail ? (emailIsValid(emailLength) ? true : false) : false}
                         helperText={<HelperText error={emailIsValid(emailLength) ? true : false}
@@ -216,10 +220,13 @@ function Form() {
                                                 counter={`${emailLength.length}/${254}`}
                                                 isDirty={isDirtyEmail}
                                                 description={'Enter your email'}/>}
-                        onBlur={e => setIsDirtyEmail(true)}
+                        onBlur={e => {
+                            setIsDirtyEmail(true);
+                            setEmailLength(e.target.value.trim())
+                        }}
                         FormHelperTextProps={{style: style.helperText}}
                     />
-                    {/*//EmailRFC field*/}
+                    {/*EmailRFC field*/}
                     <TextField
                         sx={{...style}}
                         id="outlined-basic"
@@ -228,12 +235,23 @@ function Form() {
                         value={emailLengthRFC}
                         inputProps={{maxLength: 254}}
                         InputProps={{
-                            endAdornment: isDirtyEmailRFC ? (emailIsValidRFC(emailLengthRFC) ?
-                                <ErrorOutlineIcon color={"error"} sx={{...style.icon}}/> :
-                                <CheckCircleOutlineOutlinedIcon color={"success"} sx={{...style.icon}}/>) : false
+                            endAdornment:
+                                isDirtyEmailRFC ?
+                                    (
+                                        emailIsValidRFC(emailLengthRFC) === undefined ? ''
+                                            :
+                                            (
+                                                emailIsValidRFC(emailLengthRFC)
+                                                    ?
+                                                    <ErrorOutlineIcon color={"error"} sx={{...style.icon}}/>
+                                                    :
+                                                    <CheckCircleOutlineOutlinedIcon color={"success"}
+                                                                                    sx={{...style.icon}}/>
+                                            ))
+                                    : false
                         }}
                         onChange={e => {
-                            setEmailLengthRFC(e.target.value.trim())
+                            setEmailLengthRFC(e.target.value.replace(/\s+/g, ' '))
                         }}
                         error={isDirtyEmailRFC ? (emailIsValidRFC(emailLengthRFC) ? true : false) : false}
                         helperText={<HelperText error={emailIsValidRFC(emailLengthRFC) ? true : false}
@@ -241,7 +259,10 @@ function Form() {
                                                 counter={`${emailLengthRFC.length}/${254}`}
                                                 isDirty={isDirtyEmailRFC}
                                                 description={'Enter your email'}/>}
-                        onBlur={e => setIsDirtyEmailRFC(true)}
+                        onBlur={e => {
+                            setEmailLengthRFC(e.target.value.trim());
+                            setIsDirtyEmailRFC(true);
+                        }}
                         FormHelperTextProps={{style: style.helperText}}
                     />
                     {/*ID field*/}
@@ -251,20 +272,32 @@ function Form() {
                         label="ID"
                         name='id'
                         value={ID}
+                        inputProps={{maxLength: 128}}
                         InputProps={{
-                            endAdornment: isDirtyID ? (IDIsValid(ID) ?
-                                <ErrorOutlineIcon color={"error"} sx={{...style.icon}}/> :
-                                <CheckCircleOutlineOutlinedIcon color={"success"} sx={{...style.icon}}/>) : false
+                            endAdornment:
+                                isDirtyID ?
+                                    (
+                                        IDIsValid(ID) === undefined ? ''
+                                            :
+                                            (
+                                                IDIsValid(ID)
+                                                    ?
+                                                    <ErrorOutlineIcon color={"error"} sx={{...style.icon}}/>
+                                                    :
+                                                    <CheckCircleOutlineOutlinedIcon color={"success"}
+                                                                                    sx={{...style.icon}}/>
+                                            ))
+                                    : false
                         }}
                         onChange={e => {
                             setID(e.target.value.trim())
                         }}
+                        onBlur={e => setIsDirtyID(true)}
                         error={isDirtyID ? (IDIsValid(ID) ? true : false) : false}
                         helperText={<HelperText error={IDIsValid(ID) ? true : false}
                                                 errorMessage={IDIsValid(ID)}
                                                 isDirty={isDirtyID}
                                                 description={'Use only latin lowercase letters, numbers and "_"'}/>}
-                        onBlur={e => setIsDirtyID(true)}
                         FormHelperTextProps={{style: style.helperText}}/>
                     {/*id_ field*/}
                     <TextField
@@ -275,20 +308,29 @@ function Form() {
                         value={id_}
                         inputProps={{maxLength: 128}}
                         InputProps={{
-                            endAdornment: isDirtyId_ ? (IDIsValid(id_) ?
-                                <ErrorOutlineIcon color={"error"} sx={{...style.icon}}/> :
-                                <CheckCircleOutlineOutlinedIcon color={"success"} sx={{...style.icon}}/>) : false
+                            endAdornment:
+                                isDirtyId_ ?
+                                    (IDIsValid(id_) === undefined ? ''
+                                        :
+                                        (
+                                            IDIsValid(id_)
+                                                ?
+                                                <ErrorOutlineIcon color={"error"} sx={{...style.icon}}/>
+                                                :
+                                                <CheckCircleOutlineOutlinedIcon color={"success"} sx={{...style.icon}}/>
+                                        ))
+                                    : false
                         }}
                         onChange={e => {
                             setId_(e.target.value.trim())
                         }}
+                        onBlur={e => setIsDirtyId_(true)}
                         error={isDirtyId_ ? (IDIsValid(id_) ? true : false) : false}
                         helperText={<HelperText error={IDIsValid(id_) ? true : false}
                                                 errorMessage={IDIsValid(id_)}
                                                 counter={`${id_.length}/${128}`}
                                                 isDirty={isDirtyId_}
                                                 description={'Use only latin lowercase letters, numbers and "_"'}/>}
-                        onBlur={e => setIsDirtyId_(true)}
                         FormHelperTextProps={{style: style.helperText}}/>
                     {/*Phone**/}
                     <InputMask
@@ -338,7 +380,7 @@ function Form() {
                             helperText={<HelperText error={PhoneIsValid(PhoneMark) ? true : false}
                                                     errorMessage={PhoneIsValid(PhoneMark)}
                                                     isDirty={isDirtyPhoneMark}
-                                                    description={'+38 (xxx) xxx-xx-xx'}/>}
+                                                    description={'+38 (0xx) xxx-xx-xx'}/>}
                             // onBlur={e => setIsDirtyPhoneMark(true)}
                             FormHelperTextProps={{style: style.helperText}}/>
                     }</InputMask>
@@ -351,20 +393,29 @@ function Form() {
                         value={Phone}
                         inputProps={{maxLength: 256}}
                         InputProps={{
-                            endAdornment: isDirtyPhone ? (extraPhoneIsValid(Phone) ?
-                                <ErrorOutlineIcon color={"error"} sx={{...style.icon}}/> :
-                                <CheckCircleOutlineOutlinedIcon color={"success"} sx={{...style.icon}}/>) : false
+                            endAdornment:
+                                isDirtyPhone ?
+                                    (extraPhoneIsValid(Phone) === undefined ? ''
+                                        :
+                                        (
+                                            extraPhoneIsValid(Phone)
+                                                ?
+                                                <ErrorOutlineIcon color={"error"} sx={{...style.icon}}/>
+                                                :
+                                                <CheckCircleOutlineOutlinedIcon color={"success"} sx={{...style.icon}}/>
+                                        ))
+                                    : false
                         }}
                         onChange={e => {
                             setPhone(e.target.value)
                         }}
+                        onBlur={e => setIsDirtyPhone(true)}
                         error={isDirtyPhone ? (extraPhoneIsValid(Phone) ? true : false) : false}
                         helperText={<HelperText error={extraPhoneIsValid(Phone) ? true : false}
                                                 errorMessage={extraPhoneIsValid(Phone)}
                                                 counter={`${Phone.length}/${256}`}
                                                 isDirty={isDirtyPhone}
                                                 description={'Several numbers can be entered separated by commas'}/>}
-                        onBlur={e => setIsDirtyPhone(true)}
                         FormHelperTextProps={{style: style.helperText}}
                     />
                     {/*PinCode1*/}
@@ -373,11 +424,11 @@ function Form() {
                         value={PinCode1}
                         disable={false}
                         maskChar="x"
-                        onBlur={e => setIsDirtyPinCode1(true)}
                         onChange={(e) => {
                             setPinCode1(e.target.value.replace(/[\s-]/g, ''));
                             setPinCode1Counter(e.target.value.replace(/[\s\-x]/g, ''));
                         }}
+                        onBlur={e => setIsDirtyPinCode1(true)}
                     >
                         {() =>
                             <TextField
@@ -386,23 +437,29 @@ function Form() {
                                 label="Pin code"
                                 name='pin'
                                 value={PinCode1}
-                                // inputProps={{maxLength: 8}}
                                 InputProps={{
-                                    endAdornment: isDirtyPinCode1 ? (PinIsValid(PinCode1) ?
-                                        <ErrorOutlineIcon color={"error"} sx={{...style.icon}}/> :
-                                        <CheckCircleOutlineOutlinedIcon color={"success"}
-                                                                        sx={{...style.icon}}/>) : false
+                                    endAdornment:
+                                        isDirtyPinCode1
+                                            ?
+                                            (PinIsValid(PinCode1Counter) === undefined ? ''
+                                                    :
+                                                    (PinIsValid(PinCode1Counter)
+                                                            ?
+                                                            <ErrorOutlineIcon color={"error"} sx={{...style.icon}}/>
+                                                            :
+                                                            <CheckCircleOutlineOutlinedIcon color={"success"}
+                                                                                            sx={{...style.icon}}/>
+                                                    )
+                                            )
+                                            :
+                                            false
                                 }}
-                                // onChange={e => {
-                                //     setPinCode1(e.target.value)
-                                // }}
-                                error={isDirtyPinCode1 ? (PinIsValid(PinCode1) ? true : false) : false}
-                                helperText={<HelperText error={PinIsValid(PinCode1) ? true : false}
+                                error={isDirtyPinCode1 ? (PinIsValid(PinCode1Counter) ? true : false) : false}
+                                helperText={<HelperText error={PinIsValid(PinCode1Counter) ? true : false}
                                                         errorMessage={PinIsValid(PinCode1)}
                                                         counter={`${PinCode1Counter.length}/${8}`}
                                                         isDirty={isDirtyPinCode1}
                                                         description={'Enter your pin code in the format xxxx-xxxx. Use only numbers'}/>}
-                                // onBlur={e => setIsDirtyPinCode1(true)}
                                 FormHelperTextProps={{style: style.helperText}}
                             />
                         }
@@ -416,16 +473,31 @@ function Form() {
                         value={PinCode2}
                         inputProps={{maxLength: 8}}
                         InputProps={{
-                            endAdornment: isDirtyPinCode2 ? (PinIsValid(PinCode2) ?
-                                <ErrorOutlineIcon color={"error"} sx={{...style.icon}}/> :
-                                <CheckCircleOutlineOutlinedIcon color={"success"} sx={{...style.icon}}/>) : false
+                            endAdornment:
+                                isDirtyPinCode2
+                                    ?
+                                    (secondPinIsValid(PinCode2) === undefined
+                                            ?
+                                            ''
+                                            :
+                                            (
+                                                secondPinIsValid(PinCode2)
+                                                    ?
+                                                    <ErrorOutlineIcon color={"error"} sx={{...style.icon}}/>
+                                                    :
+                                                    <CheckCircleOutlineOutlinedIcon color={"success"}
+                                                                                    sx={{...style.icon}}/>
+                                            )
+                                    )
+                                    : false
                         }}
                         onChange={e => {
                             setPinCode2(e.target.value)
                         }}
-                        error={isDirtyPinCode2 ? (PinIsValid(PinCode2) ? true : false) : false}
-                        helperText={<HelperText error={PinIsValid(PinCode2) ? true : false}
-                                                errorMessage={PinIsValid(PinCode2)}
+                        onBlur={e => setIsDirtyPinCode2(true)}
+                        error={isDirtyPinCode2 ? (secondPinIsValid(PinCode2) ? true : false) : false}
+                        helperText={<HelperText error={secondPinIsValid(PinCode2) ? true : false}
+                                                errorMessage={secondPinIsValid(PinCode2)}
                                                 counter={`${PinCode2.length}/${8}`}
                                                 isDirty={isDirtyPinCode2}
                                                 description={'Enter your pin code. Use only numbers'}/>}
@@ -444,8 +516,13 @@ function Form() {
                         multiline
                         inputProps={{maxLength: 500}} //style: {height: 108}
                         onChange={e => {
-                            setDescription(e.target.value.replace(/\s{2,}/g, ''));
+                            setDescription(e.target.value.replace(/\n{3}/g, ''));
                             setLengthForCounter(e.target.value);
+                        }}
+                        onBlur={e => {
+                            setDescription(e.target.value
+                                .replace(/ +/g, ' ')
+                                .trim())
                         }}
                         helperText={<HelperText isDirty={false}
                                                 counter={`${lengthForCounter.length}/${500}`}
