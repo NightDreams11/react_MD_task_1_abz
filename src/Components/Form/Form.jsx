@@ -261,7 +261,7 @@ function Form() {
                                                 description={'Enter your email'}/>}
                         onBlur={e => {
                             setEmailLengthRFC(e.target.value.trim());
-                            setIsDirtyEmailRFC(true);
+                            setIsDirtyEmailRFC(emailLengthRFC === '' ? false : true);
                         }}
                         FormHelperTextProps={{style: style.helperText}}
                     />
@@ -292,7 +292,7 @@ function Form() {
                         onChange={e => {
                             setID(e.target.value.trim())
                         }}
-                        onBlur={e => setIsDirtyID(true)}
+                        onBlur={e => setIsDirtyID(ID === '' ? false : true)}
                         error={isDirtyID ? (IDIsValid(ID) ? true : false) : false}
                         helperText={<HelperText error={IDIsValid(ID) ? true : false}
                                                 errorMessage={IDIsValid(ID)}
@@ -324,7 +324,7 @@ function Form() {
                         onChange={e => {
                             setId_(e.target.value.trim())
                         }}
-                        onBlur={e => setIsDirtyId_(true)}
+                        onBlur={e => setIsDirtyId_(id_ === '' ? false : true)}
                         error={isDirtyId_ ? (IDIsValid(id_) ? true : false) : false}
                         helperText={<HelperText error={IDIsValid(id_) ? true : false}
                                                 errorMessage={IDIsValid(id_)}
@@ -409,7 +409,7 @@ function Form() {
                         onChange={e => {
                             setPhone(e.target.value)
                         }}
-                        onBlur={e => setIsDirtyPhone(true)}
+                        onBlur={e => setIsDirtyPhone(Phone === '' ? false : true)}
                         error={isDirtyPhone ? (extraPhoneIsValid(Phone) ? true : false) : false}
                         helperText={<HelperText error={extraPhoneIsValid(Phone) ? true : false}
                                                 errorMessage={extraPhoneIsValid(Phone)}
@@ -428,7 +428,7 @@ function Form() {
                             setPinCode1(e.target.value.replace(/[\s-]/g, ''));
                             setPinCode1Counter(e.target.value.replace(/[\s\-x]/g, ''));
                         }}
-                        onBlur={e => setIsDirtyPinCode1(true)}
+                        onBlur={e => setIsDirtyPinCode1(PinCode1Counter === '' ? false : true)}
                     >
                         {() =>
                             <TextField
@@ -494,14 +494,13 @@ function Form() {
                         onChange={e => {
                             setPinCode2(e.target.value)
                         }}
-                        onBlur={e => setIsDirtyPinCode2(true)}
+                        onBlur={e => setIsDirtyPinCode2(PinCode2 === '' ? false : true)}
                         error={isDirtyPinCode2 ? (secondPinIsValid(PinCode2) ? true : false) : false}
                         helperText={<HelperText error={secondPinIsValid(PinCode2) ? true : false}
                                                 errorMessage={secondPinIsValid(PinCode2)}
                                                 counter={`${PinCode2.length}/${8}`}
                                                 isDirty={isDirtyPinCode2}
                                                 description={'Enter your pin code. Use only numbers'}/>}
-                        onBlur={e => setIsDirtyPinCode2(true)}
                         FormHelperTextProps={{style: style.helperText}}
                     />
                     {/*Description*/}

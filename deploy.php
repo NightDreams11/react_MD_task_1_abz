@@ -62,7 +62,7 @@ task('deploy', [            //Можно выбирать между release и 
     'deploy:release',
     'deploy:update_code',
     'install_nodejs_dependencies',
-    'webpack_storybook',
+//     'webpack_storybook',
     'build',
     'deploy:shared',
     'deploy:writable',
