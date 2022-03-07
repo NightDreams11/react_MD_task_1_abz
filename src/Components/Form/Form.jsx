@@ -62,7 +62,7 @@ function Form() {
     //Description
     const [description, setDescription] = useState('');
     const [lengthForCounter, setLengthForCounter] = useState('')
-    console.log(stringLength)
+
 
     // Выключаем кнопку, если не заполнены все обязательные поля
     const arr = {
@@ -145,7 +145,7 @@ function Form() {
         </React.Fragment>
     );
 
-    console.log(PinCode1)
+
     return (
         <div>
             <div className='header'>
@@ -212,7 +212,7 @@ function Form() {
                                 <CheckCircleOutlineOutlinedIcon color={"success"} sx={{...style.icon}}/>) : false
                         }}
                         onChange={e => {
-                            setEmailLength(e.target.value.replace(/\s+/g, ' '))
+                            setEmailLength(e.target.value.replace(/\s+/g, ''))
                         }}
                         error={isDirtyEmail ? (emailIsValid(emailLength) ? true : false) : false}
                         helperText={<HelperText error={emailIsValid(emailLength) ? true : false}
@@ -222,7 +222,6 @@ function Form() {
                                                 description={'Enter your email'}/>}
                         onBlur={e => {
                             setIsDirtyEmail(true);
-                            setEmailLength(e.target.value.trim())
                         }}
                         FormHelperTextProps={{style: style.helperText}}
                     />
@@ -290,7 +289,7 @@ function Form() {
                                     : false
                         }}
                         onChange={e => {
-                            setID(e.target.value.trim())
+                            setID(e.target.value.replace(/\s+/g, ''))
                         }}
                         onBlur={e => setIsDirtyID(ID === '' ? false : true)}
                         error={isDirtyID ? (IDIsValid(ID) ? true : false) : false}
@@ -300,38 +299,52 @@ function Form() {
                                                 description={'Use only latin lowercase letters, numbers and "_"'}/>}
                         FormHelperTextProps={{style: style.helperText}}/>
                     {/*id_ field*/}
-                    <TextField
-                        sx={{...style}}
-                        id="outlined-basic"
-                        label="id_"
-                        name='id_'
+                    <InputMask
+                        mask='bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'
+                        formatChars={{'b': '[a-z0-9_]'}}
                         value={id_}
-                        inputProps={{maxLength: 128}}
-                        InputProps={{
-                            endAdornment:
-                                isDirtyId_ ?
-                                    (IDIsValid(id_) === undefined ? ''
-                                        :
-                                        (
-                                            IDIsValid(id_)
-                                                ?
-                                                <ErrorOutlineIcon color={"error"} sx={{...style.icon}}/>
-                                                :
-                                                <CheckCircleOutlineOutlinedIcon color={"success"} sx={{...style.icon}}/>
-                                        ))
-                                    : false
-                        }}
-                        onChange={e => {
-                            setId_(e.target.value.trim())
+                        disable={false}
+                        maskChar=''
+                        onChange={(e) => {
+                            setId_(e.target.value.replace(/\s+/g, ''))
                         }}
                         onBlur={e => setIsDirtyId_(id_ === '' ? false : true)}
-                        error={isDirtyId_ ? (IDIsValid(id_) ? true : false) : false}
-                        helperText={<HelperText error={IDIsValid(id_) ? true : false}
-                                                errorMessage={IDIsValid(id_)}
-                                                counter={`${id_.length}/${128}`}
-                                                isDirty={isDirtyId_}
-                                                description={'Use only latin lowercase letters, numbers and "_"'}/>}
-                        FormHelperTextProps={{style: style.helperText}}/>
+                    >
+                        {() =>
+                            <TextField
+                                sx={{...style}}
+                                id="outlined-basic"
+                                label="id_"
+                                name='id_'
+                                value={id_}
+                                inputProps={{maxLength: 128}}
+                                InputProps={{
+                                    endAdornment:
+                                        isDirtyId_ ?
+                                            (IDIsValid(id_) === undefined ? ''
+                                                :
+                                                (
+                                                    IDIsValid(id_)
+                                                        ?
+                                                        <ErrorOutlineIcon color={"error"} sx={{...style.icon}}/>
+                                                        :
+                                                        <CheckCircleOutlineOutlinedIcon color={"success"}
+                                                                                        sx={{...style.icon}}/>
+                                                ))
+                                            : false
+                                }}
+                                // onChange={e => {
+                                //     setId_(e.target.value.replace(/\s+/g, ''))
+                                // }}
+                                // onBlur={e => setIsDirtyId_(id_ === '' ? false : true)}
+                                error={isDirtyId_ ? (IDIsValid(id_) ? true : false) : false}
+                                helperText={<HelperText error={IDIsValid(id_) ? true : false}
+                                                        errorMessage={IDIsValid(id_)}
+                                                        counter={`${id_.length}/${128}`}
+                                                        isDirty={isDirtyId_}
+                                                        description={'Use only latin lowercase letters, numbers and "_"'}/>}
+                                FormHelperTextProps={{style: style.helperText}}/>}
+                    </InputMask>
                     {/*Phone**/}
                     <InputMask
                         mask="+38 (099) 999 99 99"
@@ -359,7 +372,14 @@ function Form() {
 
                             // Do whatever with pasteddata
                             const replaced = pastedData.replace(/\+380/g, '')
-                            setPhoneMark(replaced)
+                            console.log(replaced)
+                            if (replaced.length > 9) {
+                                console.log(replaced.slice(-9))
+                                setPhoneMark(replaced.slice(-9))
+                            } else {
+                                setPhoneMark(replaced)
+                            }
+
                         }}
                     >{() =>
                         <TextField
@@ -492,7 +512,7 @@ function Form() {
                                     : false
                         }}
                         onChange={e => {
-                            setPinCode2(e.target.value)
+                            setPinCode2(e.target.value.replace(/\s+/g, ''))
                         }}
                         onBlur={e => setIsDirtyPinCode2(PinCode2 === '' ? false : true)}
                         error={isDirtyPinCode2 ? (secondPinIsValid(PinCode2) ? true : false) : false}
@@ -515,13 +535,18 @@ function Form() {
                         multiline
                         inputProps={{maxLength: 500}} //style: {height: 108}
                         onChange={e => {
-                            setDescription(e.target.value.replace(/\n{3}/g, ''));
+                            setDescription(e.target.value);
                             setLengthForCounter(e.target.value);
                         }}
                         onBlur={e => {
                             setDescription(e.target.value
                                 .replace(/ +/g, ' ')
-                                .trim())
+                                .trim()
+                                .replace(/\n{3,}/g, '\n\n'));
+                            setLengthForCounter(e.target.value
+                                .replace(/ +/g, ' ')
+                                .trim()
+                                .replace(/\n{3,}/g, '\n\n'));
                         }}
                         helperText={<HelperText isDirty={false}
                                                 counter={`${lengthForCounter.length}/${500}`}

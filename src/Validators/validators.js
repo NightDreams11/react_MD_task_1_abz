@@ -54,7 +54,7 @@ export const PhoneIsValid = (phone) => {
 }
 
 export const extraPhoneIsValid = (phone) => {
-    const regex = /^([+0-9,;()\s]+)([0-9+]+)$/
+    const regex = /^([+0-9,;()\s]+)([0-9+,()]+)$/
     // const regex = /^[+0-9]{7,13}(,\s|;\s|\s)*([+0-9]{7,13})*/ //Второй вариант рабочий
     if (regex.test(phone) && phone.length >= 7) {
         return false;
