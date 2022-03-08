@@ -148,6 +148,7 @@ function Form() {
     const b = 'b';
     const id_mask = b.repeat(128);
 
+    console.log(PhoneMark)
 
     return (
         <div>
@@ -374,7 +375,13 @@ function Form() {
                             pastedData = clipboardData.getData('Text');
 
                             // Do whatever with pasted data
-                            const replaced = pastedData.replace(/\s+/g, '');
+                            let replaced = pastedData.replace(/\s+/g, '');
+
+                            // Добавляем 380, если длинна вставки равна 9. В таком случае номера начинающиеся с
+                            // 3, 8, 0, не потеряют первые цифры и не пройдут валидацию.
+                            if (replaced.length === 9){
+                                replaced = '380' + replaced
+                            }
 
                             setPhoneMark(replaced)
                         }}
