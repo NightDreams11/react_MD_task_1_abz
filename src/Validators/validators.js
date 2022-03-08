@@ -41,12 +41,14 @@ export const IDIsValid = (ID) => {
 }
 
 export const PhoneIsValid = (phone) => {
-    if (phone.length <= 9) {
-        phone = '380' + phone;
+    // Обрезаем телефон до 9-ти знаков с конца при вставке в поле + фильтруем от пробелов и скобок при наборе с клавиатуры
+   const sliced = phone.replace(/[()\s]/g, "").slice(-9);
+    if (sliced.length <= 9) {
+        phone = '380' + sliced;
     }
-    const str = phone.replace(/[()\s]/g, "");
+
     const regex = /(^[+]{0,1}380([0-9]{9})$)/
-    if (regex.test(str)) {
+    if (regex.test(phone)) {
         return false;
     } else {
         return 'Please enter your phone in the format +38 (0xx) xxx-xx-xx'
@@ -54,7 +56,7 @@ export const PhoneIsValid = (phone) => {
 }
 
 export const extraPhoneIsValid = (phone) => {
-    const regex = /^([+0-9,;()\s]+)([0-9+,()]+)$/
+    const regex = /^([+0-9,;()\s]+)([0-9+,;()]+)$/
     // const regex = /^[+0-9]{7,13}(,\s|;\s|\s)*([+0-9]{7,13})*/ //Второй вариант рабочий
     if (regex.test(phone) && phone.length >= 7) {
         return false;

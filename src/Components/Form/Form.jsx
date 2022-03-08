@@ -145,6 +145,9 @@ function Form() {
         </React.Fragment>
     );
 
+    const b = 'b';
+    const id_mask = b.repeat(128);
+
 
     return (
         <div>
@@ -300,7 +303,7 @@ function Form() {
                         FormHelperTextProps={{style: style.helperText}}/>
                     {/*id_ field*/}
                     <InputMask
-                        mask='bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'
+                        mask={id_mask}
                         formatChars={{'b': '[a-z0-9_]'}}
                         value={id_}
                         disable={false}
@@ -370,16 +373,10 @@ function Form() {
                             clipboardData = e.clipboardData || window.clipboardData;
                             pastedData = clipboardData.getData('Text');
 
-                            // Do whatever with pasteddata
-                            const replaced = pastedData.replace(/\+380/g, '')
-                            console.log(replaced)
-                            if (replaced.length > 9) {
-                                console.log(replaced.slice(-9))
-                                setPhoneMark(replaced.slice(-9))
-                            } else {
-                                setPhoneMark(replaced)
-                            }
+                            // Do whatever with pasted data
+                            const replaced = pastedData.replace(/\s+/g, '');
 
+                            setPhoneMark(replaced)
                         }}
                     >{() =>
                         <TextField
@@ -429,7 +426,12 @@ function Form() {
                         onChange={e => {
                             setPhone(e.target.value)
                         }}
-                        onBlur={e => setIsDirtyPhone(Phone === '' ? false : true)}
+                        onBlur={e => {
+                            setIsDirtyPhone(Phone === '' ? false : true);
+                            setPhone(e.target.value
+                                .replace(/ +/g, ' ')
+                                .trim());
+                        }}
                         error={isDirtyPhone ? (extraPhoneIsValid(Phone) ? true : false) : false}
                         helperText={<HelperText error={extraPhoneIsValid(Phone) ? true : false}
                                                 errorMessage={extraPhoneIsValid(Phone)}
