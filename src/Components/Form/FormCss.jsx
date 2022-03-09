@@ -12,7 +12,7 @@ export const style = {
         }
     },
     icon: {
-      ml: 1,
+        ml: 1,
     },
     mt: 7,
     maxWidth: 380,

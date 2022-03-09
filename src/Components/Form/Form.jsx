@@ -69,9 +69,19 @@ function Form() {
         1: errorMessage(stringLength),
         2: emailIsValid(emailLength),
         3: PhoneIsValid(PhoneMark),
+        4: emailIsValidRFC(emailLengthRFC),
+        5: IDIsValid(ID),
+        6: extraPhoneIsValid(Phone),
+        7: PinIsValid(PinCode1),
+        8: secondPinIsValid(PinCode2)
     }
     let isDisable = true;
-    if ((arr[1] || arr[2] || arr[3]) === false) {
+    // debugger
+    if (
+        (arr[1] === false && arr[2] === false && arr[3] === false) === true
+        &&
+        !(arr[4] || arr[5] || arr[6] || arr[7] || arr[8])
+    ) {
         isDisable = false
     }
 
@@ -148,7 +158,6 @@ function Form() {
     const b = 'b';
     const id_mask = b.repeat(128);
 
-    console.log(PhoneMark)
 
     return (
         <div>
@@ -171,7 +180,10 @@ function Form() {
                         autoHideDuration={6000}
                         onClose={handleClose}
                         action={action}
-                        anchorOrigin={{vertical: "top", horizontal: "right"}}
+                        sx={{minWidth: 320}}
+                        anchorOrigin={window.matchMedia('(max-width: 425px)')
+                            ? {vertical: "bottom", horizontal: "center"}
+                            : {vertical: "top", horizontal: "right"}}
                         message="Data sent successfully"
                     />
                     {/*Name field*/}
@@ -379,7 +391,7 @@ function Form() {
 
                             // Добавляем 380, если длинна вставки равна 9. В таком случае номера начинающиеся с
                             // 3, 8, 0, не потеряют первые цифры и не пройдут валидацию.
-                            if (replaced.length === 9){
+                            if (replaced.length === 9) {
                                 replaced = '380' + replaced
                             }
 

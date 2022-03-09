@@ -1,11 +1,12 @@
 export const errorMessage = (stringLength) => {
     const regex = /^[a-zA-Z\s]+[a-zA-Z\s]$/
+
     if (regex.test(stringLength)) {
         return false;
-    } else if (stringLength.search(/[!@#$%^&*()_+{}[\].,:\S]/)) {
-        return 'Your name needs to be between 2 and 128 characters long'
-    } else {
+    } else if (stringLength.match(/[0-9!@#$%^&*()_+{}[\].,:]/g)) {
         return 'Your name needs to be use only latin characters'
+    } else {
+        return 'Your name needs to be between 2 and 128 characters long'
     }
 }
 
@@ -42,7 +43,7 @@ export const IDIsValid = (ID) => {
 
 export const PhoneIsValid = (phone) => {
     // Обрезаем телефон до 9-ти знаков с конца при вставке в поле + фильтруем от пробелов и скобок при наборе с клавиатуры
-   const sliced = phone.replace(/[()\s]/g, "").slice(-9);
+    const sliced = phone.replace(/[()\s]/g, "").slice(-9);
     if (sliced.length <= 9) {
         phone = '380' + sliced;
     }
