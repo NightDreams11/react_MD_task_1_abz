@@ -76,7 +76,6 @@ function Form() {
         8: secondPinIsValid(PinCode2)
     }
     let isDisable = true;
-    // debugger
     if (
         (arr[1] === false && arr[2] === false && arr[3] === false) === true
         &&
