@@ -6,14 +6,6 @@ import App from './App';
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import reportWebVitals from './reportWebVitals';
 
-// Create WebSocket connection
-const socket = new WebSocket('wss://test2022-frontend-rostyslav-m.abzdev2.com:3000/ws');
-
-// Listen for possible errors
-socket.addEventListener('error', function (event) {
-    console.log('WebSocket error: ', event);
-    socket.close();
-});
 
 ReactDOM.render(
   // eslint-disable-next-line react/jsx-filename-extension

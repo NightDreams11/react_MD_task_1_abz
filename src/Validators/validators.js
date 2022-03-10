@@ -3,7 +3,7 @@ export const errorMessage = (stringLength) => {
 
     if (regex.test(stringLength)) {
         return false;
-    } else if (stringLength.match(/[0-9!@#$%^&*()_+{}[\].,:]/g)) {
+    } else if (stringLength.match(/[0-9!"'@#$%^&*()_+{}[\].,:]/g)) {
         return 'Your name needs to be use only latin characters'
     } else {
         return 'Your name needs to be between 2 and 128 characters long'
