@@ -64,7 +64,7 @@ export const extraPhoneIsValid = (phone) => {
     } else if (phone.length === 0) {
         return undefined
     } else {
-        return 'Your phone needs to be between 7 and 256 characters long. One number between 7-13 characters'
+        return 'Your phone needs to be between 7 and 256 characters long'
     }
 }
 
