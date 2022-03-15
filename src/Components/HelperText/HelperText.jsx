@@ -1,7 +1,9 @@
-function HelperTexts({ error, errorMessage, counter, isDirty, description}) {
+function HelperTexts({error, errorMessage, counter, isDirty, description}) {
 
     if ((isDirty || description) === false) {
         error = '';
+    } else if (isDirty === true && description && error === false) {
+        error = description;
     } else if ((isDirty === false)) {
         error = description;
     } else if ((isDirty === true) && (error === true)) {
@@ -20,7 +22,8 @@ function HelperTexts({ error, errorMessage, counter, isDirty, description}) {
     ];
 
     return helperTexts.map((text) => (
-        <span key={text.id} data-id={text.id} className="helper-text">
+        <span key={text.id} data-id={text.id} style={{maxWidth: 250, color: text.id === 2 ? 'rgba(0, 0, 0, 0.6)' : ''}}
+              className="helper-text">
       {text.value}
     </span>
     ));

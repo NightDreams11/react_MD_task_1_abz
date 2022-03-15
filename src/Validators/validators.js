@@ -3,7 +3,7 @@ export const errorMessage = (stringLength) => {
 
     if (regex.test(stringLength)) {
         return false;
-    } else if (stringLength.match(/[0-9!"'@#$%^&*()_+{}[\].,:]/g)) {
+    } else if (stringLength.match(/[0-9!"'@#$%^&№;?`~></\\=\-|*()_+{}[\].,:]/g)) {
         return 'Your name needs to be use only latin characters'
     } else {
         return 'Your name needs to be between 2 and 128 characters long'
@@ -31,11 +31,13 @@ export const emailIsValidRFC = (email) => {
 }
 
 export const IDIsValid = (ID) => {
-    const regex = /^[0-9a-z_]+([0-9a-z_]+)$/
+    const regex = /^(?!_+$)([0-9a-z_]+)$/
     if (regex.test(ID)) {
         return false;
     } else if (ID.length === 0) {
         return undefined;
+    } else if (ID.match(/^_+$/g)) {
+        return 'ID can not use only "_"';
     } else {
         return 'Use only latin lowercase letters, numbers and "_". Min length 2 characters';
     }
@@ -57,7 +59,7 @@ export const PhoneIsValid = (phone) => {
 }
 
 export const extraPhoneIsValid = (phone) => {
-    const regex = /^([+0-9,;()\s]+)([0-9+,;()]+)$/
+    const regex = /^([+0-9,;()\s]+)([0-9+,;()\s]+)$/
     // const regex = /^[+0-9]{7,13}(,\s|;\s|\s)*([+0-9]{7,13})*/ //Второй вариант рабочий
     if (regex.test(phone) && phone.length >= 7) {
         return false;
@@ -83,10 +85,9 @@ export const secondPinIsValid = (pin) => {
     const regex = /^(\d{8})/
     if (regex.test(pin)) {
         return false;
-    }
-    if (pin.length === 0) {
+    } else if (pin.length === 0) {
         return undefined
     } else {
-        return 'Please enter your pin code use only numbers'
+        return 'Please enter your 8-digit pin code use only numbers.'
     }
 }

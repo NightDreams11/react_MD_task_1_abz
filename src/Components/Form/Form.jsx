@@ -190,6 +190,7 @@ function Form() {
                         sx={{...style}}
                         label="Name*"
                         name='name'
+                        placeholder='Enter your name'
                         value={stringLength}
                         inputProps={{maxLength: 128, styles}}
                         InputProps={{
@@ -219,6 +220,7 @@ function Form() {
                         id="outlined-basic"
                         label="Email*"
                         name='email'
+                        placeholder='Enter your email'
                         value={emailLength}
                         inputProps={{maxLength: 254}}
                         InputProps={{
@@ -246,6 +248,7 @@ function Form() {
                         id="outlined-basic"
                         label="Email RFC"
                         name='emailRFC'
+                        placeholder='Enter your email RFC'
                         value={emailLengthRFC}
                         inputProps={{maxLength: 254}}
                         InputProps={{
@@ -285,6 +288,7 @@ function Form() {
                         id="outlined-basic"
                         label="ID"
                         name='id'
+                        placeholder='Enter your ID'
                         value={ID}
                         inputProps={{maxLength: 128}}
                         InputProps={{
@@ -311,6 +315,7 @@ function Form() {
                         helperText={<HelperText error={IDIsValid(ID) ? true : false}
                                                 errorMessage={IDIsValid(ID)}
                                                 isDirty={isDirtyID}
+                                                counter={`${ID.length}/${128}`}
                                                 description={'Use only latin lowercase letters, numbers and "_"'}/>}
                         FormHelperTextProps={{style: style.helperText}}/>
                     {/*id_ field*/}
@@ -331,6 +336,7 @@ function Form() {
                                 id="outlined-basic"
                                 label="id_"
                                 name='id_'
+                                placeholder='Enter your id_'
                                 value={id_}
                                 inputProps={{maxLength: 128}}
                                 InputProps={{
@@ -425,6 +431,7 @@ function Form() {
                         id="outlined-basic"
                         label="Phone"
                         name='secondPhone'
+                        placeholder='Enter your phone'
                         value={Phone}
                         inputProps={{maxLength: 256}}
                         InputProps={{
@@ -510,6 +517,7 @@ function Form() {
                         id="outlined-basic"
                         label="Pin code"
                         name='secondPin'
+                        placeholder='Enter your pin code'
                         value={PinCode2}
                         inputProps={{maxLength: 8}}
                         InputProps={{
@@ -540,7 +548,7 @@ function Form() {
                                                 errorMessage={secondPinIsValid(PinCode2)}
                                                 counter={`${PinCode2.length}/${8}`}
                                                 isDirty={isDirtyPinCode2}
-                                                description={'Enter your pin code. Use only numbers'}/>}
+                                                description={'Please enter your 8-digit pin code use only numbers'}/>}
                         FormHelperTextProps={{style: style.helperText}}
                     />
                     {/*Description*/}
@@ -549,6 +557,7 @@ function Form() {
                         id="outlined-basic"
                         label="Description"
                         name='description'
+                        placeholder='Enter short comment'
                         value={description}
                         rows={4}
                         rowsmax={2}
