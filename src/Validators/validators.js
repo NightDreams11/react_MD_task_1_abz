@@ -3,7 +3,7 @@ export const errorMessage = (stringLength) => {
 
     if (regex.test(stringLength)) {
         return false;
-    } else if (stringLength.match(/[0-9!"'@#$%^&№;?`~></\\=\-|*()_+{}[\].,:]/g)) {
+    } else if (stringLength.match(/[0-9!"'@#$%^&№;?`~></\\=\-|*()_+{}[\].,:а-яА-ЯёЁ]/g)) {
         return 'Your name needs to be use only latin characters'
     } else {
         return 'Your name needs to be between 2 and 128 characters long'
@@ -11,7 +11,8 @@ export const errorMessage = (stringLength) => {
 }
 
 export const emailIsValid = (email) => {
-    const regex = /^([a-zA-Z0-9]+((\.[a-zA-Z0-9])|[a-zA-Z0-9])*)@[a-zA-Z]+\.[a-z]+((\.([a-z]+)$|([a-z])+$))/
+    // const regex = /^([a-zA-Z0-9]+((\.?\-?\_?|\/[a-zA-Z0-9])|[a-zA-Z0-9])*)@[a-zA-Z]+\.[a-z]+((\.([a-z]+)$|([a-z])+$))/
+    const regex = /^([a-zA-Z0-9+]+((\.|-|_|\/[a-zA-Z0-9])|[a-zA-Z0-9])*)@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+((\.([a-zA-Z]+)$|([a-zA-Z])+$))/
     if (regex.test(email)) {
         return false;
     } else {
@@ -20,7 +21,7 @@ export const emailIsValid = (email) => {
 }
 
 export const emailIsValidRFC = (email) => {
-    const regex = /^([a-zA-Z0-9@!#$%^&*()_\-+={}~|[\]\\'"\s])([a-zA-Z0-9@.!#$%^&*()_\-+={}~|[\]\\'"\s]{0,63})@([a-z])+(\.)(([a-z]{1,6})([^\s]$)|([a-z]+)(\.)([a-z]{1,6})([^\s.]$))/
+    const regex = /^([a-zA-z0-9-+]((\.[a-zA-Z0-9!#$%^&*()_\-+={}~|[\]\\'"\/])|[a-zA-Z0-9!#$%^&*()_\-+={}~|[\]\\'"\/]){0,63})@((([a-zA-Z0-9]-|[a-zA-Z0-9]){1,63}\.(([a-zA-Z]|-[a-zA-Z]){2,}|[0-9][a-zA-Z]){1,63})$|([a-zA-Z0-9]{1,63}\.([a-zA-Z]|[0-9][a-zA-Z]){2,63}\.[a-zA-Z0-9]{1,63})$)$/
     if (regex.test(email)) {
         return false;
     } else if (email.length === 0) {

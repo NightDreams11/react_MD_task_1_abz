@@ -22,7 +22,12 @@ function HelperTexts({error, errorMessage, counter, isDirty, description}) {
     ];
 
     return helperTexts.map((text) => (
-        <span key={text.id} data-id={text.id} style={{maxWidth: 250, color: text.id === 2 ? 'rgba(0, 0, 0, 0.6)' : ''}}
+        <span key={text.id} data-id={text.id}
+              style={{
+                  width: text.value === undefined ? 0 : (text.id === 2 ? 60 : ''),
+                  color: text.id === 2 ? 'rgba(0, 0, 0, 0.6)' : '',
+                  textAlign: text.id === 2 ? 'right' : ''
+              }}
               className="helper-text">
       {text.value}
     </span>
