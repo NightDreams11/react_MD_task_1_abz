@@ -12,7 +12,7 @@ export const errorMessage = (stringLength) => {
 
 export const emailIsValid = (email) => {
     // const regex = /^([a-zA-Z0-9]+((\.?\-?\_?|\/[a-zA-Z0-9])|[a-zA-Z0-9])*)@[a-zA-Z]+\.[a-z]+((\.([a-z]+)$|([a-z])+$))/
-    const regex = /^([a-zA-Z0-9+]+((\.|-|_|\/[a-zA-Z0-9])|[a-zA-Z0-9])*)@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+((\.([a-zA-Z]+)$|([a-zA-Z])+$))/
+    const regex = /^[^.\-\/_+\s][a-zA-Z0-9+]*(((\.|-|_|\/)[a-zA-Z0-9])|[a-zA-Z0-9])*@([a-zA-Z0-9]|[a-zA-Z0-9]-)+\.[a-zA-Z0-9-]+((\.([a-zA-Z]+)$|([a-zA-Z])+$))/
     if (regex.test(email)) {
         return false;
     } else {
