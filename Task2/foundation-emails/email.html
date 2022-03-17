@@ -7,15 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Sans+Pro:wght@400;700&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="css/foundation-emails.css"/>
-    <link rel="stylesheet" href="css/styleEmail.css"/>
-    <link rel="stylesheet" href="css/media.css">
 </head>
 
 <body>
 <style>
-    a {
-        text-decoration: none;
-    }
     .body-letter {
         width: 1024px;
         background-color: #ffffff;
@@ -82,6 +77,15 @@
         width: 500px;
         padding-top: 29px;
     }
+    .button-container{
+        text-align: center;
+    }
+    .button-container a{
+        text-decoration: none;
+        color: #D0021B;
+        text-align: center;
+        background-color: transparent;
+    }
     .button {
         display: inline-block;
         margin-top: 33px;
@@ -99,12 +103,104 @@
         text-align: center;
         line-height: 40px;
     }
-    .button-a{
-        text-decoration: none;
-        color: #D0021B;
+    .footer-text-block-1 {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: center;
+        padding-top: 35px;
+    }
+    .footer-text-block-a {
+        padding-top: 3px;
         text-align: center;
     }
-
+    .footer-text-block-a a {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 24px;
+        color: #96929D;
+    }
+    .footer-text-block-2 {
+        padding-top: 11px;
+        text-align: center;
+    }
+    .footer-line-container{
+        width: 500px;
+        margin: 0 auto;
+    }
+    .footer-line {
+        margin-top: -1px;
+        opacity: 0.2;
+        padding-top: 35px;
+        border-bottom: 1px solid rgba(150, 146, 157, 0.2);
+        text-align: center;
+    }
+    .footer-phone {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 24px;
+        padding-top: 33px;
+        text-align: center;
+    }
+    .footer-date {
+        padding-top: 10px;
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 24px;
+        text-align: center;
+    }
+    .footer-info{
+        padding-top: 10px;
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 24px;
+        text-align: center;
+    }
+    .footer-end {
+        padding-top: 25px;
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 24px;
+        color: #96929D;
+        padding-bottom: 34px;
+        text-align: center;
+    }
+    @media screen and (max-width: 360px){
+        .body-letter {
+            width: 360px;
+        }
+        .title-above-logo {
+            padding-top: 11px;
+            line-height: 23px;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+        .main-photo img{
+            height: 246px !important;
+            width: 328px !important;
+        }
+        .text-block-title br{
+            display: none;
+        }
+        .text-block-text{
+            width: 330px;
+        }
+        .footer-line-container{
+            width: 360px;
+        }
+    }
 </style>
 <table class="body" data-made-with-foundation>
     <tr>
@@ -120,14 +216,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="title-above-logo">
+                        <td class="title-above-logo">
                             abz.agency published a new post on Facebook
-                        </th>
+                        </td>
                     </tr>
                     <tr>
-                        <th class="main-photo">
+                        <td class="main-photo">
                             <img src="https://test2022-frontend-rostyslav-m.abzdev2.com/main.svg" alt="main"/>
-                        </th>
+                        </td>
                     </tr>
                     <tr>
                         <td class="text-block">
@@ -137,7 +233,6 @@
                     <tr>
                         <td class="text-block-title">
                             The entire company was closed from December 26th to <br/>January 3rd
-                        </td>
                     </tr>
                     <tr>
                         <td style="text-align: center">
@@ -154,9 +249,56 @@
                             </table>
                         </td>
                     </tr>
-                    <tr style="text-align: center">
-                        <td class="button-a">
+                    <tr>
+                        <td class="button-container">
                             <a href="#" class="button">Continue reading</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="footer-text-block-1">
+                            Or use the next link:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="footer-text-block-a">
+                            <a href="#">https://www.facebook.com/Abz-agency-<br>
+                                108264647345140/</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="footer-text-block-2">
+                            Yours sincerely, abz.agency team
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="footer-line-container">
+                                <tr>
+                                    <td class="footer-line">
+                                        <!--line-->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="footer-phone">
+                            +380 95 945 5227
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="footer-date">
+                            Mon - Fri, 8:00 - 17:00 GMT+3
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="footer-info">
+                            info@abz.agency
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="footer-end">
+                            © 2022 abz.agency
                         </td>
                     </tr>
                 </table>
