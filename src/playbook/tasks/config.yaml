@@ -1,0 +1,11 @@
+---
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: tasks/config
+    dest: ~/.ssh/config
+
+- name: Copy file with owner and permissions
+  ansible.builtin.copy:
+    src: .ssh/bitbucket_rsa
+    dest: ~/.ssh/bitbucket_rsa
+    mode: '0600'

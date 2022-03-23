@@ -1,0 +1,28 @@
+Первый конфиг рабочий, второй изначальный
+
+[program:site]
+process_name=%(program_name)s%(process_num)02d
+directory=/var/www/test2022-frontend-rostyslav-m.abzdev2.com/current/
+command=npm run start
+autostart=true
+autorestart=true
+user=root
+numprocs=1
+stopasgroup=true
+stopsignal=QUIT
+redirect_stderr=true
+stdout_logfile=/var/log/supervisor/next.log
+
+
+[program:site]
+process_name=%(program_name)s%(process_num)02d
+directory=/var/www/test2022-frontend-rostyslav-m.abzdev2.com/current/
+file=/var/run/supervisor.sock
+command=npm run start
+autostart=true
+autorestart=true
+numprocs=1
+redirect_stderr=true
+stderr_logfile=/var/log/supervisor/next.log
+stdout_logfile=/var/log/supervisor/next.log
+
